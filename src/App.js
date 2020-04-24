@@ -4,6 +4,7 @@ import Disclaimer from "./pages/Disclaimer";
 import Login from "./pages/Login"
 import SingUp from "./pages/SingUp"
 import Photography from  "./pages/Photography"
+import Home from "./pages/Home"
 
 
 const App = () => (
@@ -19,8 +20,11 @@ const App = () => (
       <Route path="/signUp">
       	<SingUp/>
       </Route>
-      <Route path="/">
+      <Route path="/photo">
       	<Photography/>
+      </Route>
+      <Route path ="/home">
+      	<Home/>
       </Route>
     </Switch>
   </Router>

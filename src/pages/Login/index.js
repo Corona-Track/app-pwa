@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FaFacebookSquare } from 'react-icons/fa';
 
 import { useHistory } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { SignInAction, loginWithFacebook } from '../../actions/AuthActions';
 
@@ -11,12 +11,13 @@ import { Container, Image, Content, Error, Line, Term } from './styles';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import Loading from '../../components/Loading';
 
 import logo from '../../assets/images/logo.svg';
 
 export default function Login() {
 
-	// const Dispatch = useDispatch();
+	const Dispatch = useDispatch();
  	 const history = useHistory();
 
   	const [email, setEmail] = useState('');
@@ -34,7 +35,7 @@ export default function Login() {
     	if (status) {
       		clearAll();
       		setLoading(false);
-      		history.push('/');
+      		history.push('/home');
     	} else {
       		setErrorMessage(error.message);
       		setPassword('');
@@ -44,28 +45,28 @@ export default function Login() {
 
   function login() {
     setLoading(true);
-    // Dispatch(SignInAction(email, password))
-    //   .then(() => {
-    //     validateForm(true);
-    //   })
-    //   .catch(error => {
-    //     validateForm(false, error);
-    //   });
+    Dispatch(SignInAction(email, password))
+      .then(() => {
+        validateForm(true);
+      })
+      .catch(error => {
+        validateForm(false, error);
+      });
   }
 
   function loginFacebook() {
     setLoading(true);
-    // Dispatch(loginWithFacebook(email, password))
-    //   .then(() => {
-    //     clearAll();
-    //     setLoading(false);
-    //     history.push('/diagnostico/suspeitos');
-    //   })
-    //   .catch(error => {
-    //     setErrorMessage(error.message);
-    //     setPassword('');
-    //     setLoading(false);
-    //   });
+    Dispatch(loginWithFacebook(email, password))
+      .then(() => {
+        clearAll();
+        setLoading(false);
+        history.push('/diagnostico/suspeitos');
+      })
+      .catch(error => {
+        setErrorMessage(error.message);
+        setPassword('');
+        setLoading(false);
+      });
   }
 
   const goToTerms = () => {
@@ -81,6 +82,7 @@ export default function Login() {
 
 	return(
 		<Container>
+      <Loading open={loading} />
 			<Image src={logo} alt="Logo" />
 		<Content>
 	        <Input
