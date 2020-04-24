@@ -1,5 +1,5 @@
 export const $brandColorPrimary = '#0058F4';
-export const $brandColorCecondary = '#EF550A';
+export const $brandColorSecondary = '#0FFF99';
 
 export const $colorDanger = '#EB5757';
 export const $colorSuccess = '#27AE60';

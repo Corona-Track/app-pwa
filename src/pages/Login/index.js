@@ -111,7 +111,7 @@ export default function Login() {
 
 	        <Button
 	          variant="contained"
-	          theme="segundary"
+	          theme="secondary"
 	          background="#235DE3"
 	          onClick={() => loginFacebook()}
 	          startIcon={<FaFacebookSquare />}
@@ -121,7 +121,7 @@ export default function Login() {
 
 	        <Button
 	          variant="contained"
-	          theme="segundary"
+	          theme="secondary"
 	          onClick={() => history.push('/disclaimer')}
 	        >
 	          Cadastre-se

@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-import { $brandColorPrimary } from '../../styles/variables';
+import { $brandColorPrimary, $brandColorSecondary } from '../../styles/variables';
 
 const primary = color => {
   return {
@@ -29,11 +29,29 @@ const secondary = color => {
   };
 };
 
+const third = color => {
+  return {
+    width: '100%',
+    '&:hover': { background: '#ffffff' },
+    height: '56px',
+    borderRadius: '100px',
+    backgroundColor: `${$brandColorSecondary}`,
+    color: `#FFF`,
+    marginBottom: '16px',
+    boxShadow: 'none',
+  };
+}
+
 const styledButton = props => {
   const isBackground = props.background || $brandColorPrimary;
-  return props.theme === 'primary'
-    ? primary(isBackground)
-    : secondary(isBackground);
+
+  if(props.theme === 'primary'){
+    return primary(isBackground)
+  } else if(props.theme === 'secondary'){
+    return secondary(isBackground)
+  } else if (props.theme === 'third') {
+    return third(isBackground)
+  }
 };
 export const ButtonText = withStyles({
   root: styledButton,
