@@ -122,7 +122,7 @@ export default function Login() {
 	        <Button
 	          variant="contained"
 	          theme="secondary"
-	          onClick={() => history.push('/disclaimer')}
+	          onClick={() => history.push('/photo')}
 	        >
 	          Cadastre-se
 	        </Button>
