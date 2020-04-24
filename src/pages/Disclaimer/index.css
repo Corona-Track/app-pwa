@@ -1,0 +1,71 @@
+.disclaimer {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  padding-top: 64px;
+  align-items: center;
+  background-color: white
+}
+
+.disclaimer-title {
+  color: #0058f4;
+  width: 268px;  
+  font-family: Prompt;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.disclaimer-text {
+  color: #0058f4;
+  width: 268px;  
+  font-family: Prompt;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 25px;
+  text-align: center;
+}
+.disclaimer-text span {
+  color: #0058f4;
+  word-break: break-word;
+  width: 268px;
+  font-family: Prompt;
+  font-style: bold;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 25px;
+  text-align: center;
+}
+.pageImage {
+  margin-top: 30px; 
+  max-width:50px;
+}
+
+.disclaimer3 {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  padding-top: 100px;
+  align-items: center;
+  background-color: white
+}
+
+.imageBox {
+  display: flex;
+  justify-content: space-between  
+}
+.susDiv {
+  margin: 0px 10px;
+
+}
+.wowDiv {
+  margin: 0px 10px;
+}
+.hospitalImage {
+  margin-top: 30px; 
+  max-width:70px;
+}
+
