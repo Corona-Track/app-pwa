@@ -4,13 +4,19 @@ import Disclaimer from "./pages/Disclaimer";
 import Login from "./pages/Login"
 import SingUp from "./pages/SingUp"
 import Photography from  "./pages/Photography"
+import Perfil from './pages/Perfil';
 
 
 const App = () => (
 
   <Router>
-    <Switch>    
-      <Route path="/" exact>
+    <Switch>   
+
+      <Route path="/">
+      	<Perfil/>
+      </Route>
+
+      <Route path="/Disclaimer" >
         <Disclaimer />
       </Route>
       <Route path="/login">
@@ -22,6 +28,9 @@ const App = () => (
       <Route path="/">
       	<Photography/>
       </Route>
+
+      
+
     </Switch>
   </Router>
 );
