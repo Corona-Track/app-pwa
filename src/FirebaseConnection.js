@@ -3,17 +3,16 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const config = {
-  apiKey: 'AIzaSyDZPOOiLCYFIwNLrDSDLtqla1UkgGiuMIE',
-  authDomain: 'coronatrack-2d30e.firebaseapp.com',
-  databaseURL: 'https://coronatrack-2d30e.firebaseio.com',
-  projectId: 'coronatrack-2d30e',
-  storageBucket: 'coronatrack-2d30e.appspot.com',
-  messagingSenderId: '222784198996',
-  appId: '1:222784198996:web:372d1775ba4315fe1ed0c1',
-  measurementId: 'G-MFNS24S8EY',
+  	apiKey: "AIzaSyA_fneu-6nUSXdP0vKcw5Q9U-zYhMqqD-c",
+	authDomain: "coronatrackrn.firebaseapp.com",
+	databaseURL: "https://coronatrackrn.firebaseio.com",
+	projectId: "coronatrackrn",
+	storageBucket: "coronatrackrn.appspot.com",
+	messagingSenderId: "438503559606",
+	appId: "1:438503559606:web:7e7484b3668459dac4b117",
+	measurementId: "G-XTT70PZ3FE"
 };
 
 // Initialize Firebase
 firebase.initializeApp(config);
-
 export default firebase;

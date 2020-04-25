@@ -5,7 +5,7 @@ export const Container = styled.div`
   font-family: Prompt;
   width: 100%;
   height: 100%;
-  margin-top: 40px;
+  margin-top: 30px;
 `;
 
 export const Content = styled.div`
@@ -29,7 +29,7 @@ export const Question = styled.div`
   text-align: center;
   width: 55%;
   font-size: 16px;
-  margin-top: 20px;
+  margin-top: 40px;
   spam {
     font-weight: bold;
   }
@@ -54,4 +54,5 @@ export const Image = styled.img`
 export const Next = styled.div`
   color: #BDBDBD;
   font-size: 14px;
+  margin-bottom: 24px;
 `
