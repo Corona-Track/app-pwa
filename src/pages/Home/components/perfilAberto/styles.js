@@ -5,7 +5,7 @@ export const BoxInfos = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 15px;
+    margin-top: 5px;
 
     strong{
       margin-right: 5px;
@@ -22,7 +22,7 @@ export const BoxInfos = styled.div`
 `;
 
 export const BoxMenu = styled.div`
-  margin-top: 10px;
+  margin-top: 5px;
   padding: 0 20px;
   
   .singleMenu:nth-child(1){
@@ -45,6 +45,7 @@ export const BoxMenu = styled.div`
   }
   h2{
     font-size: 13px;
+    margin-top: 5px;
     font-weight: normal;
     color: #fff;
   }

@@ -43,15 +43,13 @@ export const BoxPerfil = styled.header`
   }
  }
   
- 
- 
  strong{
   color: white;
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 21px;
  }
  img{
-  margin-top: 15px;
+  margin-top: 5px;
  }
 `;
 
