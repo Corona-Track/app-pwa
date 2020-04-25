@@ -44,6 +44,7 @@ export const BoxPerfil = styled.header`
  }
   
  
+ 
  strong{
   color: white;
   margin-top: 10px;
