@@ -1,23 +1,25 @@
 import React, { useState } from 'react'
-import { Carousel } from 'react-responsive-carousel';
-import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
-import './index.css';
+import { Carousel } from 'react-responsive-carousel'
+import styles from 'react-responsive-carousel/lib/styles/carousel.min.css'
+import './index.css'
 import pages from '../../assets/images/pages.png'
 import sus from '../../assets/images/sus.png'
 import wow from '../../assets/images/wow.png'
 import hospital from '../../assets/images/hospital.png'
 
-
+import { useHistory } from 'react-router-dom'
 
 
 export default function Disclaimer() {
+
+    const history = useHistory();
+    
     const [selectedItem, setSelectedItem] = useState(0)
 
     function onCarouselChangeIndex(index){
         setSelectedItem(index)
     }
 
-    
     function renderIndicator(isSelected,index,label){
         if(selectedItem===label)
         return <span className="dot" style={{backgroundColor:'#0058F4'}}></span>
@@ -33,7 +35,23 @@ export default function Disclaimer() {
          <Disclaimer1/>
          <Disclaimer2/>
          <Disclaimer3/>
-         <Disclaimer4/>
+         <div>
+             <div className='disclaimer'>
+                <img className='hospitalImage' src={hospital} alt='hospital'/>
+                <p className='disclaimer-text'>
+                Caso deseje ou precise de uma consulta médica, você pode usar nossa plataforma para se conectar com a Aliança Médica, podendo assim tirar suas dúvidas com um médico.
+                <p> 
+                Caso sinta algo que julgue ser uma urgência, por favor <span className='disclaimer-attetion'>
+                 encaminhe-se para o posto de saúde ou pronto-socorro mais próximo.
+                </span>
+                </p>
+                </p>
+                <div className="button-next" onClick={() => history.push('/login')} >
+                    Continuar
+                </div>
+            </div>
+         </div>
+         
         </Carousel>
     )
 }
@@ -62,7 +80,7 @@ function Disclaimer2() {
 }
 
 function Disclaimer3() {
-    return <div className='disclaimer3'>
+    return <div className='disclaimer'>
         <p className='disclaimer-text'>
         Nosso aplicativo funciona com base em modelos matemáticos e não tem a intenção de substituir uma consulta médica ou de contrariar as recomendações do governo de sua região. 
        <p>
@@ -84,18 +102,19 @@ function Disclaimer3() {
     </div>
 }
 
-function Disclaimer4() {
-    return <div className='disclaimer'>
-        <img className='hospitalImage' src={hospital} alt='hospital'/>
-        <p className='disclaimer-text'>
-        Caso deseje ou precise de uma consulta médica, você pode usar nossa plataforma para se conectar com a Aliança Médica, podendo assim tirar suas dúvidas com um médico.
-        <p> 
-        Caso sinta algo que julgue ser uma urgência, por favor <span className='disclaimer-attetion'>
-         encaminhe-se para o posto de saúde ou pronto-socorro mais próximo.
-        </span>
-
-        </p>
-        </p>
-        
-    </div>
-}
+// function Disclaimer4() {
+//     return <div className='disclaimer'>
+//         <img className='hospitalImage' src={hospital} alt='hospital'/>
+//         <p className='disclaimer-text'>
+//         Caso deseje ou precise de uma consulta médica, você pode usar nossa plataforma para se conectar com a Aliança Médica, podendo assim tirar suas dúvidas com um médico.
+//         <p> 
+//         Caso sinta algo que julgue ser uma urgência, por favor <span className='disclaimer-attetion'>
+//          encaminhe-se para o posto de saúde ou pronto-socorro mais próximo.
+//         </span>
+//         </p>
+//         </p>
+//         <div className="button-next" onClick={() => history.push('/login')} >
+//             Continuar
+//         </div>
+//     </div>
+// }

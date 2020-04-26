@@ -1,4 +1,3 @@
-import {Platform} from 'react-native';
 
 export const Colors = {
   primaryColor: '#EE7600',
@@ -7,7 +6,6 @@ export const Colors = {
   secondaryColor: '#F5F5F5',
   inputPrimaryColor: '#54C6CF',
   buttonPrimaryColor: '#26B3C1',
-  fontFamily: Platform.OS === 'android' ? 'Prompt-Light' : 'Prompt',
   defaultIconColor: '#BDBDBD',
   navigatorIconColor: '#EA5B2D',
   questionCenterIconColor: '#E9F7F9',
