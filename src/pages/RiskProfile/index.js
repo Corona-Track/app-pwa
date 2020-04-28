@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react'
 
-// Services
-import { getUser } from '../../services/firebase/User';
-import { SignIn } from '../../services/firebase/Auth';
-
 // style
 import './index.css'
 
@@ -15,15 +11,16 @@ import riskProfileTypes from '../../utils/enums/riskProfileTypes'
 
 
 // Components
-import Header from '../../components/PageHeader';
 import Contagion from './components/Contagion'
 import Aggravation from './components/Aggravation'
+import Button from '../../components/Button'
+import HeaderPerfil from '../../components/HeaderPerfil'
 
 
 
-export default function RiskProfile() {
 
-
+export default function RiskProfile(props) {
+    const user =props.location.state.userData
     const [riskProfileId, setRiskProfileId] = useState(1)
     const [contagionRiskId, setContagionRiskId] = useState(1)
     const [aggravationRiskId, setAggravationRiskId] = useState(1)
@@ -33,21 +30,12 @@ export default function RiskProfile() {
     const aggravationRisk = getAggravationRisk(aggravationRiskId)
 
     useEffect(() => {
-
-        getUserData()
+        setRisks()
     }, [])
 
-    async function getUserData() {
-        // TODO, após fazer a tela de login, retirar signIn daqui
-        const email = 'Teste3@hotmail.com.br'
-        const pass = '123456'
-        await SignIn(email, pass)
-        const user = await getUser()
-        const userData = user.data()
-        setRisks(userData)
-    }
-    function setRisks(userData) {
-        const { aggravationRisk, contagionRisk, riskProfile } = userData
+
+    function setRisks() {
+        const { aggravationRisk, contagionRisk, riskProfile } = user
 
         setRiskProfileId(riskProfile)
         setAggravationRiskId(aggravationRisk)
@@ -61,17 +49,34 @@ export default function RiskProfile() {
         </div>)
     }
 
+    function onPressBackToStart(){
+        
+        props.history.push('/home')
+    }
 
     return (
-        <div>
-            <Header />
-            <body>
-                <Title/>
+        <>
+          <HeaderPerfil name={user.name} back={() => props.history.goBack()}/>
+            <div>
+                <Title />
                 <Contagion {...contagionRisk} />
                 <Aggravation {...aggravationRisk} />
-            </body>
+            </div>
+            <footer>
+                <Button theme="secondary" 
+          variant="contained"
+          >
+              AGENDAR TELEORIENTAÇÃO
+          </Button>
+          <Button theme="primary" 
+          variant="contained"
+          onClick={() => onPressBackToStart()}
+          >
+              VOLTAR PARA O INICIO
+          </Button>
+            </footer>
 
-        </div>
+        </>
     )
 }
 
