@@ -1,37 +1,20 @@
 import React, { useState } from 'react'
-// import { Button } from '@material-ui/core';
+import { BrowserRouter as Router, useHistory,Switch, Route, Link } from "react-router-dom";
+import SymptomsPage from './symptom';
+import ReportSymptomsPage from './reportsymptoms';
 
-import { Container, Content, Question,Text, CircleButton, Image, Next } from './styles';
-
-import Button from '../../components/Button';
-// import HeaderPerfil from '../../components/HeaderPerfil';
-// import ProgressTracking from '../../components/ProgressTracking';
-import stethoscope from '../../assets/images/stethoscope.png';
-import virus from '../../assets/images/virus.png';
-
-export default function Symptoms() {
-
+export default function SymptomMainPage() {
+    const history = useHistory();
 	return (
-		<Container>
-			{/* <HeaderPerfil></HeaderPerfil> */}
-			<Content>
-				<Question>
-					Minha <span>saúde:</span>.
-				</Question>
-				<CircleButton>
-					<Image src={stethoscope}></Image>
-				</CircleButton>
-				<Text>reportar sintomas</Text>
-				<CircleButton>
-					<Image src={virus}></Image>
-				</CircleButton>
-				<Text>reportar testes</Text>
-				<Button variant="contained" theme="third">
-	          		Continuar
-	        	</Button>
-	        	<Next>Pular</Next>
-	        	{/* <ProgressTracking amount={7} position={1}/> */}
-			</Content>
-		</Container>
-	)
+        <Router>
+        <Switch>    
+          <Route path ="/report">
+              <ReportSymptomsPage />
+          </Route>
+          <Route path ="/">
+              <SymptomsPage />
+          </Route>
+        </Switch> 
+      </Router>
+    )
 }

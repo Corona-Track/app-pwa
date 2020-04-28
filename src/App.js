@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 // import SingUp from "./pages/SingUp"
 // import Photography from  "./pages/Photography"
 // import Home from "./pages/Home"
-import Symptoms from "./pages/Symptoms"
+
+import SymptomsMainPage from './pages/Symptoms';
 
 const App = () => (
     
@@ -27,7 +28,7 @@ const App = () => (
       	<Home/>
       </Route> */}
       <Route path ="/">
-      	<Symptoms />
+      	<SymptomsMainPage />
       </Route>
       
     </Switch> 
