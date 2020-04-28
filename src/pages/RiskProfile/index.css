@@ -1,0 +1,17 @@
+.title span {
+  display: block;
+  text-align: center;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.title .risk {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 25px;
+}
+
+footer {
+  padding: 25px 35px;
+}
