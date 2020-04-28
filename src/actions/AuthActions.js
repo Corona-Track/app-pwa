@@ -112,9 +112,6 @@ export const createNewUser = (email, password, newUserInfos) => {
                 );
                 localStorage.setItem('Uid', user.uid);
 
-                console.log('Cheguei aqui')
-                console.log(newUserInfos)
-
                 const newUser = newUserInfos;
                 delete newUser.email;
                 delete newUser.password;
