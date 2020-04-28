@@ -10,8 +10,10 @@ import Home from "./pages/Home"
 const App = () => (
 
   <Router>
-    <Switch>    
-      <Route path="/" exact>
+    <Switch>   
+    
+
+      <Route path="/Disclaimer" >
         <Disclaimer />
       </Route>
       <Route path="/login">
