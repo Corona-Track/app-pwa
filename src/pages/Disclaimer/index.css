@@ -1,35 +1,56 @@
+.slider-wrapper {
+  background-color: white;
+  height: 100vh;
+}
+
+.carousel .control-dots {
+  padding: 0px;
+  bottom: 10px;
+}
+
+.carousel .control-dots .dot {
+  box-shadow: none;
+  margin: 0 4px;
+  opacity: 1;
+}
+
+.slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFF !important;
+}
+
 .disclaimer {
   display: flex;
-  height: 100vh;
   flex-direction: column;
-  padding-top: 64px;
+  padding-top: 24px;
   align-items: center;
-  background-color: white
+  background-color: white;
+  color: #0058F4;
+  font-family: 'Prompt';
 }
 
 .disclaimer-title {
-  color: #0058f4;
   width: 268px;  
   font-family: Prompt;
   font-style: normal;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 1.4em;
   line-height: 25px;
   text-align: center;
 }
 
 .disclaimer-text {
-  color: #0058f4;
   width: 268px;  
   font-family: Prompt;
   font-style: normal;
   font-weight: 300;
-  font-size: 22px;
+  font-size: 1.2em;
   line-height: 25px;
   text-align: center;
 }
 .disclaimer-text span {
-  color: #0058f4;
   word-break: break-word;
   width: 268px;
   font-family: Prompt;
@@ -42,15 +63,6 @@
 .pageImage {
   margin-top: 30px; 
   max-width:50px;
-}
-
-.disclaimer3 {
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  padding-top: 100px;
-  align-items: center;
-  background-color: white
 }
 
 .imageBox {
@@ -67,5 +79,16 @@
 .hospitalImage {
   margin-top: 30px; 
   max-width:70px;
+}
+
+.button-next {
+  padding: 12px 0;
+  background: #FFFFFF;
+  border: 1.5px solid #0058F4;
+  border-radius: 100px;
+  color: #0058F4;
+  width: 110%;
+  font-size: 16px;
+  text-transform: uppercase;
 }
 

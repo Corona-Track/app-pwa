@@ -1,0 +1,61 @@
+.aggravation {
+  max-width: 100wv;
+  color: #828282;
+}
+
+.aggravation button {
+  border: 0;
+  margin: 25px auto;
+  display:block;
+  background-color: transparent
+}
+.aggravation img {
+  display:block;
+  margin: 0 auto;
+  margin-top: 40px;
+  height: 60px;
+}
+.aggravationInfo {
+  padding: 0px 50px;
+  justify-content: center;
+  border-bottom: 1px solid #f6f6f6;
+}
+.aggravationInfo span {
+  margin: 25px 50px;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+}
+.aggravationInfo p {
+    margin:0;
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;    
+    text-align: justify;
+    color: #333333;
+  }
+
+.aboutAggravation {
+  max-width: 100wv;
+  background-color: #f6f6f6;
+  padding: 25px 50px;
+}
+
+.aboutAggravation strong {
+  font-weight: bold;
+  font-size: 12px;
+}
+.aboutAggravation p {
+  font-size: 12px;
+  line-height: 17px;
+  text-align: justify;
+  margin: 3px 0 25px 0px;
+}
+.aboutAggravation .references {
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 17px;
+  text-align: justify;
+}
