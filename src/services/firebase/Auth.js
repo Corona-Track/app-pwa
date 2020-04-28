@@ -1,5 +1,5 @@
-import {auth} from './Config';
-import {firestore} from './Config';
+import { auth, firestore } from '../../FirebaseConnection'
+
 
 
 export const signOut = () => {
@@ -17,13 +17,13 @@ export const signOut = () => {
 };
 
 export const SignIn = (email, password) => {
- 
+
 
   return new Promise((resolve, reject) => {
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        const {uid} = auth().currentUser;
+        const { uid } = auth().currentUser;
         resolve(uid);
       })
       .catch(error => {
@@ -54,7 +54,7 @@ export const SignUp = (email, password, name, photo) => {
   return new Promise((resolve, reject) => {
     const currentUser = auth().currentUser;
     if (currentUser) {
-      const {uid} = auth().currentUser;
+      const { uid } = auth().currentUser;
       resolve(uid);
       return;
     }
@@ -62,7 +62,7 @@ export const SignUp = (email, password, name, photo) => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        const {uid} = auth().currentUser;
+        const { uid } = auth().currentUser;
         resolve(uid);
       })
       .catch(error => {

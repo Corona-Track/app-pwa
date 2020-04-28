@@ -1,11 +1,10 @@
-import {auth} from './Config';
-import {firestore} from './Config';
+import { auth, firestore } from '../../FirebaseConnection'
 import moment from 'moment';
 import KEYS from './Constant';
 
 export const GetSymptomByUser = () => {
   return new Promise((resolve, reject) => {
-    const {uid} = auth().currentUser;
+    const { uid } = auth().currentUser;
 
     firestore()
       .collection(KEYS.TABLE_SYMPTOM)
@@ -35,7 +34,7 @@ export const GetSymptomByUser = () => {
 
 export const SaveSymptom = model => {
   return new Promise((resolve, reject) => {
-    const {uid} = auth().currentUser;
+    const { uid } = auth().currentUser;
 
     model.user_id = uid;
 
@@ -54,7 +53,7 @@ export const SaveSymptom = model => {
 
 export const UpdateSymptom = model => {
   return new Promise((resolve, reject) => {
-    const {uid} = auth().currentUser;
+    const { uid } = auth().currentUser;
     const id = model.id;
     model.user_id = uid;
 

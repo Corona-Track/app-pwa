@@ -1,4 +1,4 @@
-import {firestore} from './Config';
+import { firestore } from '../../FirebaseConnection';
 
 export const saveUserPosition = userParams => {
     return new Promise((resolve, reject) => {

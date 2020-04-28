@@ -1,11 +1,11 @@
-import {auth} from './Config';
-import {firestore} from './Config';
+import { auth, firestore } from '../../FirebaseConnection'
+
 import KEYS from './Constant';
 
 export const getUser = () => {
 
   return new Promise((resolve, reject) => {
-    const {uid} = auth().currentUser;
+    const { uid } = auth().currentUser;
     firestore()
       .collection(KEYS.TABLE_USER)
       .doc(uid)
@@ -40,7 +40,7 @@ export const getUserFilter = (key, op, value) => {
 
 export const SaveUser = model => {
   return new Promise((resolve, reject) => {
-    const {uid} = auth().currentUser;
+    const { uid } = auth().currentUser;
     firestore()
       .collection(KEYS.TABLE_USER)
       .doc(uid)
@@ -56,7 +56,7 @@ export const SaveUser = model => {
 
 export const UpdatePhoto = photo => {
   return new Promise((resolve, reject) => {
-    const {uid} = auth().currentUser;
+    const { uid } = auth().currentUser;
 
     firestore()
       .doc(`${KEYS.TABLE_USER}/${uid}`)
