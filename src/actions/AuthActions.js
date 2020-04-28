@@ -112,14 +112,26 @@ export const createNewUser = (email, password, newUserInfos) => {
                 );
                 localStorage.setItem('Uid', user.uid);
 
+                console.log('Cheguei aqui')
+                console.log(newUserInfos)
+
                 const newUser = newUserInfos;
                 delete newUser.email;
                 delete newUser.password;
 
-                firebase
-                  .database()
-                  .ref(`Users/${user.uid}`)
-                  .set({ ...newUser });
+                var db = firebase.firestore();
+
+                db.collection("users").doc(user.uid).add({
+                  cpf:1501570101,
+                  rg: 'Seila'
+                })
+                .then(function(docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                })
+                .catch(function(error) {
+                    console.error("Error adding document: ", error);
+                });
+
 
                 localStorage.setItem('Signed', true);
                 resolve({ uid: user.uid });

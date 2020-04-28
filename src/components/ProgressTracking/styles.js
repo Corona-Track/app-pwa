@@ -3,8 +3,15 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	display: flex;
-	width: 30%;
-	justify-content: space-between;
+	width: 100%;
+	position: fixed;
+    bottom: 0px;
+    background: white;
+    left: 0;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
 `
 
 export const DotSelected = styled.div`
@@ -20,3 +27,10 @@ export const DotNo = styled.div`
 	background: rgba(0, 88, 244, 0.3);
 	border-radius: 50%;
 `;
+
+export const Content = styled.div`
+	width: 30%;
+	display: flex;
+
+	justify-content: space-between;
+`

@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { Container, Content, Question, CircleButton, Image, ImagePerfil , Next, Input, SelectPhoto } from './styles';
-
+// Components
 import { MdLocalSee } from 'react-icons/md';
-
 import Button from '../../components/Button';
 import HeaderPerfil from '../../components/HeaderPerfil';
 import ProgressTracking from '../../components/ProgressTracking';
 import camera from '../../assets/images/camera.png';
 
+// Styles
+import { Container, Content, Question, CircleButton, Image, ImagePerfil , Next, Input, SelectPhoto } from './styles';
 
 export default function Photography() {
+
+	const history = useHistory();
 
 	const [formState, setFormState] = useState({
     	file: '',
@@ -67,10 +70,14 @@ export default function Photography() {
       					</SelectPhoto>
           			) : null}
 				</CircleButton>
-				<Button variant="contained" theme="third">
+				<Button variant="contained" theme="third" onClick={() => history.push('/signUp')}>
 	          		Continuar
 	        	</Button>
-	        	<Next>Pular</Next>
+	        	<Next onClick={() => history.push({
+  pathname: '/signUp',
+  search: '?query=abc',
+  state: { detail: "Porra" }
+})}>Pular</Next>
 	        	<ProgressTracking amount={7} position={1}/>
 			</Content>
 		</Container>

@@ -3,21 +3,30 @@ import { useHistory } from 'react-router-dom';
 import { MdArrowForward } from 'react-icons/md';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import { useDispatch } from 'react-redux';
+import { createNewUser, setPosition } from '../../actions/AuthActions';
+
 // Components
 import HeaderRouter from '../../components/HeaderRouter';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
 import Button from '../../components/Button';
 import Loading from '../../components/Loading';
+import ProgressTracking from '../../components/ProgressTracking';
+import HeaderPerfil from '../../components/HeaderPerfil';
 
 // Styles
-import { Container, Content } from './styles';
+import { Container, Content, Error } from './styles';
 
-export default function SingUp() {
+export default function SingUp(props) {
+
   const history = useHistory();
   const inputDateBirth = useRef();
   const inputRefPhone = useRef();
   const inputRefCpf = useRef();
+  const Dispatch = useDispatch();
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [formState, setFormState] = useState({
     name: '',
@@ -26,7 +35,46 @@ export default function SingUp() {
     sexo: '',
     pregnant: ' ',
     phone: '',
+    email: '',
+    password: ''
   });
+
+
+  function validateEmail() {
+    const { email } = formState;
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const validate = re.test(String(email).toLowerCase());
+
+    if (email !== '' && !validate) {
+      setError({
+        ...error,
+        email: true,
+      });
+    } else {
+      setError({
+        ...error,
+        email: false,
+      });
+    }
+  }
+
+  function validatePassword() {
+    const { password } = formState;
+    if (password < 6) {
+      setError({
+        ...error,
+        password: true,
+      });
+      return true;
+    }
+    setError({
+      ...error,
+      password: false,
+    });
+    return false;
+  }
+
+  const [isFacebook] = useState(localStorage.getItem('loginType') || false);
 
   const [loading, setLoading] = useState(false);
 
@@ -44,8 +92,6 @@ export default function SingUp() {
       target: { value },
     } = event;
     if (maxLength !== '') {
-      console.log(value.length);
-      console.log(maxLength);
       if (value.length <= maxLength) {
         setFormState({
           ...formState,
@@ -59,6 +105,7 @@ export default function SingUp() {
       });
     }
   }
+
 
   function nextStep() {
     const isEmpty = Object.entries(formState).find(element => {
@@ -77,7 +124,7 @@ export default function SingUp() {
       setLoading(true);
       localStorage.setItem('infosTemp', JSON.stringify(formState));
       window.scrollTo(0, 0);
-      history.push('/signUp/nextStep');
+      history.push('/');
     }
   }
 
@@ -189,13 +236,63 @@ export default function SingUp() {
     }
   }
 
+
+  function createUser() {
+    const infosTemp = localStorage.getItem('infosTemp') || '{}';
+
+    const isEmpty = Object.entries(formState).find(element => {
+      if (element[1] === '') {
+        return element;
+      }
+      return false;
+    });
+
+    if (isEmpty) {
+      setError({
+        ...error,
+        [isEmpty[0]]: true,
+      });
+    }
+  
+    else {
+      setLoading(true);
+      const newForm = {
+        ...JSON.parse(infosTemp),
+        ...formState,
+      };
+      Dispatch(createNewUser(formState.email, formState.password, newForm))
+        .then((response) => {
+          let uidToUse = null;
+          if (response) {
+            let { uid } = response;
+            uidToUse = uid;
+          } else {
+            uidToUse = localStorage.getItem("Uid")
+          }
+        })
+        .catch(error => {
+          setErrorMessage(error.message);
+          setLoading(false);
+        });
+    }
+  }
+
   return (
     <Container>
       <Loading open={loading} />
+      <HeaderPerfil back={true} user={true} name={formState.name}></HeaderPerfil>
       <Content>
-        <HeaderRouter title="Criar Conta" onClick={() => history.goBack()} />
-
-        <p className="description">Dados Pessoais</p>
+        <p className="description">Agora, precisamos saber um pouco mais sobre você e <spam>seus dados pessoais.</spam></p>
+        <Input
+          required
+          label="Nome Completo"
+          error={error.name}
+          value={formState.name}
+          variant="outlined"
+          onChange={event => setState(event, 'name', '')}
+          onBlur={() => onBlurState('name')}
+          type="text"
+        />
         <Input
           required
           label="CPF"
@@ -210,16 +307,6 @@ export default function SingUp() {
           inputProps={{
             maxLength: 10,
           }}
-        />
-        <Input
-          required
-          label="Nome Completo"
-          error={error.name}
-          value={formState.name}
-          variant="outlined"
-          onChange={event => setState(event, 'name', '')}
-          onBlur={() => onBlurState('name')}
-          type="text"
         />
         <Input
           required
@@ -273,14 +360,38 @@ export default function SingUp() {
           onFocus={() => validatePhone()}
           inputRef={inputRefPhone}
         />
-        <Button
-          variant="contained"
-          theme="primary"
-          endIcon={<MdArrowForward />}
-          onClick={() => nextStep()}
-        >
-          Próximo
+
+        {!isFacebook && (
+          <>
+            <Input
+              required
+              label="E-mail"
+              error={error.email}
+              value={formState.email}
+              variant="outlined"
+              onChange={event => setState(event, 'email', '')}
+              helperText={error.email && 'Digite um e-mail valido!'}
+              onBlur={() => validateEmail('blur')}
+              onFocus={() => validateEmail()}
+            />
+
+            <Input
+              variant="outlined"
+              label="Password"
+              value={formState.password}
+              error={error.password}
+              helperText="Digite uma senha com mais de 6 caracteres"
+              onChange={event => setState(event, 'password', '')}
+              onBlur={() => validatePassword('blur')}
+            />
+          </>
+        )}
+       
+        <Button variant="contained" theme="third" onClick={() => createUser()}>
+          Continuar
         </Button>
+        {errorMessage !== '' && <Error>{errorMessage}</Error>}
+        <ProgressTracking amount={7} position={2}/>
       </Content>
     </Container>
   );

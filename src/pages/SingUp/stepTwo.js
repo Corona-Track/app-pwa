@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
+// import axios from 'axios';
 
 // import Geocode from 'react-geocode';
 
@@ -98,27 +98,27 @@ export default function Home() {
 
   function completeCep() {
     const { zipCode } = formState;
-    axios
-      .get(`https://viacep.com.br/ws/${zipCode}/json/`)
-      .then(({ data }) => {
-        setFormState({
-          ...formState,
-          street: data.logradouro,
-          neighborhood: data.bairro,
-          city: data.localidade,
-          uf: data.uf,
-        });
-        setError({
-          ...error,
-          zipCode: false,
-        });
-      })
-      .catch(() => {
-        setError({
-          ...error,
-          zipCode: true,
-        });
-      });
+    // axios
+    //   .get(`https://viacep.com.br/ws/${zipCode}/json/`)
+    //   .then(({ data }) => {
+    //     setFormState({
+    //       ...formState,
+    //       street: data.logradouro,
+    //       neighborhood: data.bairro,
+    //       city: data.localidade,
+    //       uf: data.uf,
+    //     });
+    //     setError({
+    //       ...error,
+    //       zipCode: false,
+    //     });
+    //   })
+    //   .catch(() => {
+    //     setError({
+    //       ...error,
+    //       zipCode: true,
+    //     });
+    //   });
   }
 
   function validatePassword() {

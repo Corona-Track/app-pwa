@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { $colorDanger } from '../../styles/variables';
+import { $colorDanger, $gray900 } from '../../styles/variables';
 
 export const Container = styled.div`
   width: 100%;
@@ -8,15 +8,24 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  padding: 0 25px;
+  display: flex;
+  font-family: 'Prompt';
+  flex-direction: column;
+  align-items: center;
   text-align: left;
-
+  padding: 0 24px;
+  box-sizing: border-box;
+  padding-bottom: 40px;
   p.description {
-    font-weight: 500;
+    text-align: center;
+    width: 70%;
+    line-height: 25px;
     font-size: 16px;
-    line-height: 24px;
-    color: #828282;
-    margin: 40px 0 18px 0;
+    color: ${$gray900};
+    margin: 40px 0 40px 0;
+  }
+  spam {
+    font-weight: bold;
   }
 `;
 

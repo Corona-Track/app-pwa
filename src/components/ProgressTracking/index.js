@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, DotSelected, DotNo } from './styles'
+import { Container, DotSelected, DotNo, Content } from './styles'
 
 export default function ProgressTracking(props) {
 
@@ -19,8 +19,11 @@ export default function ProgressTracking(props) {
 	}
 
   	return (
+
   		<Container>
+  			<Content>
   			{renderDots()}
+  			</Content>
   		</Container>
   	)
 }

@@ -5,6 +5,7 @@ import Login from "./pages/Login"
 import SingUp from "./pages/SingUp"
 import Photography from  "./pages/Photography"
 import Home from "./pages/Home"
+import SignUpNextStep from './pages/SingUp/stepTwo';
 
 
 const App = () => (
@@ -25,6 +26,9 @@ const App = () => (
       </Route>
       <Route path ="/home">
       	<Home/>
+      </Route>
+      <Route path="/signUp/nextStep">
+        <SignUpNextStep/>
       </Route>
     </Switch>
   </Router>

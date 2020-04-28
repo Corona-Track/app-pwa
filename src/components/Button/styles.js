@@ -32,7 +32,7 @@ const secondary = color => {
 const third = color => {
   return {
     width: '100%',
-    '&:hover': { background: '#ffffff' },
+    '&:hover': { background: '#039F5D' },
     height: '56px',
     borderRadius: '100px',
     backgroundColor: `${$brandColorSecondary}`,
