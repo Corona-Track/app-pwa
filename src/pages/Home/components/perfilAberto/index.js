@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { BoxInfos, BoxMenu } from './styles';
+import { useDispatch } from 'react-redux';
 
 // Importações de imagens
 import heart from '../../../../assets/icons/Vector.png';
@@ -10,61 +11,69 @@ import config from '../../../../assets/icons/config.png';
 import logOut from '../../../../assets/icons/log-out.png';
 import cross from '../../../../assets/icons/icon-cross.png';
 
-export default function PerfilAberto() {
+import { signOut } from '../../../../actions/AuthActions';
+import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
-  
+export default function PerfilAberto(props) {
+  const {cpf, birthday} = props.user
+  const {onPressPerfil} = props
+  const Dispatch = useDispatch();
+  const history = useHistory();
+  const age = moment().diff(new Date(birthday.seconds * 1000), 'years');
+ 
+  function setSignOut() {
+    Dispatch(signOut()).then(() => {
+      history.push('/login');
+    });
+  }
  return (
    <>
      
      <BoxInfos>
-
          <div className="info">
            <strong>Idade:</strong>
-           <p>37 anos</p>  
+           <p>{age}</p>  
          </div>
          
          <div className="info">
            <strong>CPF:</strong>
-           <p>987.654.321-00</p> 
+           <p>{cpf}</p> 
          </div>
 
-         <div className="info">
-           <strong>RG:</strong>
-           <p>01.234.567-89</p>
-         </div>
-        
+                
      </BoxInfos>
 
      <BoxMenu>
 
        <div className="singleMenu">
          <img src={profile} alt="imagem"/>
-         <a href="/" >INFORMAÇÕES DO PERFIL</a>
+         <span onClick={onPressPerfil}   >INFORMAÇÕES DO PERFIL</span>
        </div>
        
        <div className="singleMenu">
          <img src={heart} alt="imagem"/>
-         <a href="/" >MINHA SAÚDE</a>
+         <span >MINHA SAÚDE</span>
        </div>
 
        <div className="singleMenu">
          <img src={computer} alt="imagem"/>
-         <a href="/" >TELEORIENTAÇÃO</a>
+         <span>TELEORIENTAÇÃO</span>
        </div>
 
        <div className="singleMenu">
          <img src={cross} alt="imagem"/>
-         <a href="/" >UTILIDADE PÚBLICA</a>
+         <span >UTILIDADE PÚBLICA</span>
        </div>
 
        <div className="singleMenu">
          <img src={config} alt="imagem"/>
-         <a href="/" >CONFIGURAÇÕES</a>
+         <span >CONFIGURAÇÕES</span>
        </div>
 
-       <div className="singleMenu">
+       <div className="singleMenu" onClick={()=>setSignOut()}>
          <img src={logOut} alt="imagem"/>
-         <a href="/" >SAIR</a>
+         <span >SAIR</span>
        </div>
        
        <h2>Versão 1.0.1</h2>

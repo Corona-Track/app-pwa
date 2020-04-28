@@ -3,8 +3,18 @@ import React from 'react';
 import { BoxPefilFechado } from './styles';
 
 import qrcode from '../../../../assets/icons/qrcode.png';
+import moment from 'moment';
 
-export default function PerfilFechado() {
+import riskProfileTypes from '../../../../utils/enums/riskProfileTypes'
+
+
+export default function PerfilFechado(props) {
+  const {cpf, riskProfile,birthday} = props.user
+  const {onPressPerfil} = props
+
+  const age = moment().diff(new Date(birthday.seconds * 1000), 'years');
+
+  const riskProfileInfo = getRiskProfile(riskProfile)
 
   return(
    <BoxPefilFechado>
@@ -13,27 +23,51 @@ export default function PerfilFechado() {
 
               <div className="info">
                 <strong>Idade:</strong>
-                <p>37 anos</p>  
+                <p>{age} anos</p>  
               </div>
               
               <div className="info">
                 <strong>CPF:</strong>
-                <p>987.654.321-00</p> 
-              </div>
-
-              <div className="info">
-                <strong>RG:</strong>
-                <p>01.234.567-89</p>
-              </div>
+                <p>{cpf}</p> 
+              </div>          
 
               <img src={qrcode} alt="imagem"/>
-              <p>Você é perfil <strong>VERDE</strong></p>
-              <button>ENTENDA MELHOR O SEU PERFIL</button>
+              <p>Você é perfil <strong style={{color:riskProfileInfo.color}}>{riskProfileInfo.label}</strong></p>
+              <button onClick={onPressPerfil} style={{backgroundColor:riskProfileInfo.color}}>ENTENDA MELHOR O SEU PERFIL</button>
 
             </div>
             
       </BoxPefilFechado>
   )
+  }
 
+  function getRiskProfile(riskProfileId) {
+    switch (riskProfileId) {
+        case riskProfileTypes.GREEN: {
+            return {
+                label: 'VERDE',
+                color: '#27AE60',
+            }
+        }
+        case riskProfileTypes.YELLOW: {
+            return {
+                label: 'AMARELO',
+                color: '#FFC700',
+            }
+        }
+
+        case riskProfileTypes.RED: {
+            return {
+                label: 'VERMELHO',
+                color: '#FF0000'
+            }
+        }
+        default: {
+            return {
+                label: 'VERDE',
+                color: '#27AE60',
+            }
+        }
+    }
 }
 

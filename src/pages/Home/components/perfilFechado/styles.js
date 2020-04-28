@@ -38,11 +38,9 @@ export const BoxPefilFechado = styled.div`
     }
 
     strong{
-      color: #27AE60;
     }
 
     button{
-      background: #27AE60;
       padding: 15px 20px;
       font-family: 'Dosis', sans-serif;
       border: 0;

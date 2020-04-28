@@ -31,8 +31,7 @@ export const BoxPerfil = styled.header`
  .circle{
   width: 110px;
   height: 110px;
-  border: 2px solid #fff;
-  background: #27AE60;
+  border: 2px solid #fff;  
   justify-content: center;
   align-items: center;
   display: flex;
@@ -41,6 +40,11 @@ export const BoxPerfil = styled.header`
     display: inline-block;
     margin:0;
   }
+ }
+
+ .circle span {
+  font-size: 40px;
+  color:#fff;
  }
   
  strong{

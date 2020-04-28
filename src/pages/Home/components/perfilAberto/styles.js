@@ -35,7 +35,7 @@ export const BoxMenu = styled.div`
     display: flex;
     align-items: center;
     
-    a{
+    span{
       font-family: 'Dosis', sans-serif;
       color: #fff;
       margin-left: 10px;
