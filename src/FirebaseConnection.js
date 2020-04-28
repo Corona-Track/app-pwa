@@ -1,9 +1,9 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
+import 'firebase/firestore';
 
 const config = {
-  	apiKey: "AIzaSyA_fneu-6nUSXdP0vKcw5Q9U-zYhMqqD-c",
+	apiKey: "AIzaSyA_fneu-6nUSXdP0vKcw5Q9U-zYhMqqD-c",
 	authDomain: "coronatrackrn.firebaseapp.com",
 	databaseURL: "https://coronatrackrn.firebaseio.com",
 	projectId: "coronatrackrn",
@@ -15,4 +15,7 @@ const config = {
 
 // Initialize Firebase
 firebase.initializeApp(config);
+const auth = firebase.auth
+const firestore = firebase.firestore
+export {auth,firestore}
 export default firebase;
