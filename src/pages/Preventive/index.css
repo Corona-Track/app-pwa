@@ -1,0 +1,38 @@
+
+.container {
+}
+.slider-wrapper {
+    display: flex;
+    background-color: white;
+  }
+  .slide {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: #FFF !important;
+  }
+.preventivePage {
+    flex-direction: column;
+    height: 80%;
+    display: flex;
+    padding: 40px 50px; 
+    overflow-y: scroll;
+}
+.question {
+    font-weight: 300;
+font-size: 18px;
+line-height: 25px;
+text-align: center;
+color:#333333
+}
+.quetion span {
+    font-weight: bold;
+}
+.continueButton {
+   position: absolute;
+   left: 0;
+   bottom:0;
+   padding: 35px 25px 25px 25px;
+   width: 100vw;
+   
+}
