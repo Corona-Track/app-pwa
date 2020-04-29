@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Radio,RadioGroup,FormControlLabel,Paper,List,Checkbox } from '@material-ui/core';
+import { Radio,RadioGroup,FormControlLabel,Paper,List,Checkbox,Hidden } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Container, Content, Question,Text } from '../styles';
 import moment from 'moment'
@@ -9,7 +9,8 @@ import { render } from '@testing-library/react';
 
 export default function ReportSymptomPage() {
     const history = useHistory();
-    const [selectedValue, setSelectedValue] = React.useState('s');
+    // const [selectedValue, setSelectedValue] = React.useState(false);
+    
 
     // const [state, setState] = React.useState({
     //     checkedA: true,
@@ -17,12 +18,22 @@ export default function ReportSymptomPage() {
     //     checkedF: true,
     //     checkedG: true,
     //   });
-    const handleChange = (event) => {
-        setSelectedValue(event.target.value);
+
+
+    const onPressCheckbox = (event) => {
+        let {entity} = state;
+        entity.showSymptons = event.target.value
+        // setSelectedValue(event.target.value)
+        setState({entity});
+        if (!entity.showSymptons) {
+            setState({continueNoSymptons: true});
+        } else {
+            setState({continueNoSymptons: false});
+        }
         // componentWillMount()
-        console.log('selectedValue',selectedValue)
+        console.log('[onPressCheckbox]',entity.showSymptons)
     };
-    const [state] = React.useState({
+    const [state,setState] = React.useState({
         id: null,
         checkedA: true,
         checkedB: true,
@@ -219,38 +230,72 @@ export default function ReportSymptomPage() {
             });
         }
     }
-    
+    const IntroText = () => (
+        <Question>
+            Você <span>está com sintomas</span> hoje?
+        </Question>
+      );
+    const HaveSymptoms = () => (
+    <Question>
+        Você teve <span>algum destes</span>?
+        <span>sintomas</span> nos últimos 14 dias?
+    </Question>
+    );
+    const WhatFelling = () => (
+        <Question>
+            <span>O que</span> você está sentindo hoje?
+        </Question>
+      );
+    const YesORNoItem = ({
+        onPressCheckbox
+        }) =>(
+        <RadioGroup row aria-label="quiz" name="quiz" value={entity.showSymptons} onChange={onPressCheckbox}>
+            <FormControlLabel
+                value = 'true'
+                control={<Radio color="primary" />}
+                label="Sim"
+                labelPlacement="left"
+            />
+            <FormControlLabel
+                value = 'false'
+                control={<Radio color="primary" />}
+                label="Não"
+                labelPlacement="left"
+            />
+        </RadioGroup>
+    );
+
+    let {entity} = state;
 	return (
 		<Container>
 			<Content>
             {/* <div styles={{ height: '500px', overflowY: 'scroll' }} style={styles.wrapperDiv}> */}
 			    <HeaderRouter title="ReportSymptomPage" onClick={() => history.goBack()} />
-				<Question>
-					Você <span>está com sintomas</span> hoje?
-				</Question>
-                <RadioGroup row aria-label="quiz" name="quiz" value={selectedValue} onChange={handleChange}>
-                    <FormControlLabel
-                        value="s"
-                        control={<Radio color="primary" />}
-                        label="Sim"
-                        labelPlacement="left"
-                    />
-                    <FormControlLabel
-                        value="n"
-                        control={<Radio color="primary" />}
-                        label="Não"
-                        labelPlacement="left"
-                    />
-                </RadioGroup>
-                <Question>
-				    <span>O que</span> você está sentindo hoje?
-				</Question>
-                <List>
-                <FormControlLabel
-                    control={<Checkbox color="primary" checked={state.checkedA} onChange={handleChange} name="checkedA" />}
-                    label="Febre"
+				<IntroText/>
+                <YesORNoItem
+                    onPressCheckbox = {onPressCheckbox}
                 />
-                </List>
+                {entity.showSymptons ? (
+                    <WhatFelling />
+                ) : (
+                    entity.showSymptons === false && <HaveSymptoms />
+                )}
+                <Hidden>
+                    <List>
+                    <FormControlLabel
+                        control={<Checkbox color="primary" checked={state.checkedA} onChange={onPressCheckbox} name="checkedA" />}
+                        label="Febre"
+                    />
+                    </List>
+                </Hidden>
+                <Hidden mdDown>
+                    <List>
+                    <FormControlLabel
+                        control={<Checkbox color="primary" checked={state.checkedA} onChange={onPressCheckbox} name="checkedA" />}
+                        label="Febre"
+                    />
+                    </List>
+                </Hidden>
 			</Content>
 		</Container>
 	)
