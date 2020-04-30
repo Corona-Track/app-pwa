@@ -1,0 +1,57 @@
+
+
+.slider-wrapper {
+    display: flex;
+    background-color: white;   
+
+  }
+ 
+.preventivePage {
+    flex-direction: column;
+    height: 80%;
+    display: flex;
+    padding: 40px 50px; 
+    overflow-y: scroll;
+}
+.question {
+    font-weight: 300;
+font-size: 18px;
+line-height: 25px;
+text-align: center;
+color:#333333;
+padding-bottom: 30px;
+}
+.quetion span {
+    font-weight: bold;
+}
+.continueButton {
+   position: absolute;
+   left: 0;
+   bottom:0;
+   padding: 35px 25px 25px 25px;
+   width: 100vw;   
+}
+.answer {
+    font-weight: 300;
+font-size: 16px;
+color: #828282
+}
+
+.optionsCollum {
+    display: flex;
+    flex-direction: column;
+    
+}
+.optionCollumn {
+    display: flex;
+    padding-bottom:25px 
+}
+
+.options {
+    display: flex;
+    flex-direction: row;
+    justify-content: center
+}
+.option {
+    padding-left: 30px
+}

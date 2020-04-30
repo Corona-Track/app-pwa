@@ -15,9 +15,7 @@
 }
 
 .slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; 
   background-color: #FFF !important;
 }
 
@@ -29,6 +27,9 @@
   background-color: white;
   color: #0058F4;
   font-family: 'Prompt';
+  align-items: center;
+  justify-content: center;
+  padding: 0 35px;
 }
 
 .disclaimer-title {
