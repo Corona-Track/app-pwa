@@ -16,10 +16,19 @@ export default function HeaderPerfil(props) {
 
 		return null
 	}
+
+	function onClickBack(){
+		if(props.onPressBack){
+		props.onPressBack()
+		}
+		else{
+			history.goBack()
+		}
+	}
   	return (
   		<Container>
-			<CloseDiv onClick={() => history.goBack()}>
-  				{props.back ? (<MdArrowBack size="30px" color={$brandColorPrimary} />) : null}
+			<CloseDiv onClick={() => onClickBack()}>
+  				{props.back||props.onPressBack? (<MdArrowBack size="30px" color={$brandColorPrimary} />) : null}
   			</CloseDiv>
 	  		<UserDiv>
 				<Photo />				  
@@ -31,4 +40,3 @@ export default function HeaderPerfil(props) {
   		</Container>
   )
 }
-
