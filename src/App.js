@@ -18,7 +18,7 @@ const App = () => (
       <Route path="/riskProfile" component={RiskProfile} />
       <Route path="/photo" component={Photography} />
       <Route path="/home" component={Home} />
-      <Route path="/signUp/nextStep" component={SignUpNextStep} />
+      <Route path="/nextStep" component={SignUpNextStep} />
     </Switch>
     <Redirect from='/' to='/Disclaimer' />
   </Router>

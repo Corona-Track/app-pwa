@@ -1,4 +1,5 @@
 import firebase from '../FirebaseConnection';
+import firestore from 'firebase/firestore'
 
 export const isLogged = () => {
   return dispatch => {
@@ -87,6 +88,7 @@ export const createNewUser = (email, password, newUserInfos) => {
         localStorage.setItem('Signed', true);
         resolve();
       } else {
+        console.log('entro')
         firebase
           .auth()
           .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -111,19 +113,19 @@ export const createNewUser = (email, password, newUserInfos) => {
                   }
                 );
                 localStorage.setItem('Uid', user.uid);
-
+                
                 const newUser = newUserInfos;
+
                 delete newUser.email;
                 delete newUser.password;
 
-                var db = firebase.firestore();
+                console.log(user.uid)
 
-                db.collection("users").doc(user.uid).add({
-                  cpf:1501570101,
-                  rg: 'Seila'
-                })
-                .then(function(docRef) {
-                    console.log("Document written with ID: ", docRef.id);
+                const docRef = firebase.firestore().doc('users/' + user.uid)
+                
+                docRef.set(newUser)
+                .then(function() {
+                    console.log('salvo')
                 })
                 .catch(function(error) {
                     console.error("Error adding document: ", error);

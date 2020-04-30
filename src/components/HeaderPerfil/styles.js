@@ -9,8 +9,13 @@ export const Container = styled.div`
 	justify-content: space-between;
 	padding: 0 20px;
 	box-sizing: border-box;
-<<<<<<< HEAD
 `;
+
+export const ImageUser = styled.img`
+	width: 100%;
+    height: 100%;
+    border-radius: 100%;
+`
 
 export const UserDiv = styled.div`
 display: flex;  

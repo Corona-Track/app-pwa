@@ -21,12 +21,21 @@ import { Container, Content, Error } from './styles';
 export default function SingUp(props) {
 
   const history = useHistory();
+
   const inputDateBirth = useRef();
   const inputRefPhone = useRef();
   const inputRefCpf = useRef();
   const Dispatch = useDispatch();
 
   const [errorMessage, setErrorMessage] = useState('');
+
+  
+  var image = null
+
+  if(props.location.state){
+    const user = props.location.state.user
+    image = user.image
+  }
 
   const [formState, setFormState] = useState({
     name: '',
@@ -36,7 +45,8 @@ export default function SingUp(props) {
     pregnant: ' ',
     phone: '',
     email: '',
-    password: ''
+    password: '',
+    photo: image
   });
 
 
@@ -266,6 +276,13 @@ export default function SingUp(props) {
           if (response) {
             let { uid } = response;
             uidToUse = uid;
+            setLoading(false);
+            history.push('/nextStep', { 
+              user: { 
+                name: formState.name,
+                image: formState.photo
+            }})
+            window.scrollTo(0, 0);
           } else {
             uidToUse = localStorage.getItem("Uid")
           }
@@ -280,7 +297,7 @@ export default function SingUp(props) {
   return (
     <Container>
       <Loading open={loading} />
-      <HeaderPerfil back={true} user={true} name={formState.name}></HeaderPerfil>
+      <HeaderPerfil back={true} user={true} name={formState.name} photo={formState.photo}></HeaderPerfil>
       <Content>
         <p className="description">Agora, precisamos saber um pouco mais sobre você e <spam>seus dados pessoais.</spam></p>
         <Input

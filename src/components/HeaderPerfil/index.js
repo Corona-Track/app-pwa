@@ -7,7 +7,7 @@ import close from "../../assets/images/close.svg";
 
 import { $brandColorPrimary } from '../../styles/variables';
 
-import { Container, ButtonClose, CloseDiv, UserButton, ContainerUser, Name, UserDiv  } from './styles'
+import { Container, ButtonClose, CloseDiv, UserButton, ContainerUser, Name, UserDiv, ImageUser  } from './styles'
 
 
 export default function HeaderPerfil(props) {
@@ -27,7 +27,10 @@ export default function HeaderPerfil(props) {
   			{props.user ? (
   				<ContainerUser>
 		  			<UserButton>
-		  				<FaUserAlt color={'rgba(0, 88, 244, 0.3)'}/>
+		  				{ 
+		  					props.photo ? (<ImageUser src={props.photo} alt="userPhoto" className="userPhoto" />) : 
+		  					(<FaUserAlt color={'rgba(0, 88, 244, 0.3)'}/>)
+		  				}
 		  			</UserButton>
 		  			<Name>{props.name}</Name>
 	  			</ContainerUser>

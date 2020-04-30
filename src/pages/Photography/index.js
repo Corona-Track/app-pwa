@@ -70,14 +70,14 @@ export default function Photography() {
       					</SelectPhoto>
           			) : null}
 				</CircleButton>
-				<Button variant="contained" theme="third" onClick={() => history.push('/signUp')}>
+				<Button variant="contained" theme="third" onClick={() => history.push('/signUp', {
+					user: {
+						image: imagePreviewUrl
+					}
+				})}>
 	          		Continuar
 	        	</Button>
-	        	<Next onClick={() => history.push({
-  pathname: '/signUp',
-  search: '?query=abc',
-  state: { detail: "Porra" }
-})}>Pular</Next>
+	        	<Next onClick={() => history.push('/signUp')}>Pular</Next>
 	        	<ProgressTracking amount={7} position={1}/>
 			</Content>
 		</Container>

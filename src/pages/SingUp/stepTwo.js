@@ -1,25 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-// import axios from 'axios';
+import axios from 'axios';
 
 // import Geocode from 'react-geocode';
+import firebase from 'firebase';
 
 import { useHistory } from 'react-router-dom';
 import { MdArrowForward, MdMyLocation } from 'react-icons/md';
 import { createNewUser, setPosition } from '../../actions/AuthActions';
 
 // Components
+import HeaderPerfil from '../../components/HeaderPerfil';
 import HeaderRouter from '../../components/HeaderRouter';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import Loading from '../../components/Loading';
+import ProgressTracking from '../../components/ProgressTracking';
 
 // Styles
 import { Container, Content, Error } from './styles';
 
-export default function Home() {
+export default function Home(props) {
   const history = useHistory();
   const Dispatch = useDispatch();
+
+  var image = null
+  var name = ''
+  var firstName = ''
+
+  if(props.location.state){
+    const user = props.location.state.user
+    image = user.image
+    name = user.name
+    var splitName = name.split(' ')
+    firstName = splitName[0]
+  }
 
   const [formState, setFormState] = useState({
     zipCode: '',
@@ -29,6 +44,9 @@ export default function Home() {
     uf: '',
     email: '',
     password: '',
+    name: name,
+    photo: image,
+    firstName: firstName
   });
 
   const [loading, setLoading] = useState(false);
@@ -98,27 +116,27 @@ export default function Home() {
 
   function completeCep() {
     const { zipCode } = formState;
-    // axios
-    //   .get(`https://viacep.com.br/ws/${zipCode}/json/`)
-    //   .then(({ data }) => {
-    //     setFormState({
-    //       ...formState,
-    //       street: data.logradouro,
-    //       neighborhood: data.bairro,
-    //       city: data.localidade,
-    //       uf: data.uf,
-    //     });
-    //     setError({
-    //       ...error,
-    //       zipCode: false,
-    //     });
-    //   })
-    //   .catch(() => {
-    //     setError({
-    //       ...error,
-    //       zipCode: true,
-    //     });
-    //   });
+    axios
+    .get(`https://viacep.com.br/ws/${zipCode}/json/`)
+    .then(({ data }) => {
+        setFormState({
+          ...formState,
+          street: data.logradouro,
+          neighborhood: data.bairro,
+          city: data.localidade,
+          uf: data.uf,
+        });
+        setError({
+          ...error,
+          zipCode: false,
+        });
+      })
+      .catch(() => {
+        setError({
+          ...error,
+          zipCode: true,
+        });
+      });
   }
 
   function validatePassword() {
@@ -164,6 +182,7 @@ export default function Home() {
         ...JSON.parse(infosTemp),
         ...formState,
       };
+      
       Dispatch(createNewUser(formState.email, formState.password, newForm))
         .then((response) => {
           let uidToUse = null;
@@ -181,12 +200,22 @@ export default function Home() {
             .catch(() => {
               setLoading(false);
             });
-        })
-        .catch(error => {
-          setErrorMessage(error.message);
-          setLoading(false);
-        });
-    }
+          })
+          .catch(error => {
+            setErrorMessage(error.message);
+            setLoading(false);
+          });
+        }
+      }
+
+  function addMoreInfo(){
+    const infosTemp = localStorage.getItem('infosTemp') || '{}';
+    const newForm = {
+        ...JSON.parse(infosTemp),
+        ...formState,
+      };
+
+    localStorage.setItem('infosTemp', JSON.stringify(newForm));
   }
 
   useEffect(() => {
@@ -199,13 +228,12 @@ export default function Home() {
   return (
     <Container>
       <Loading open={loading} />
+      <HeaderPerfil back={true} user={true} name={formState.name} photo={formState.photo}></HeaderPerfil>
       <Content>
-        <HeaderRouter title="Criar Conta" onClick={() => history.goBack()} />
-        <p className="description">Dados de Endereço</p>
-
+        <p className="description"><spam>Muito bem, {formState.firstName}!</spam> Agora nos diga, por favor, onde você mora.</p>
         <Button
           variant="contained"
-          theme="segundary"
+          theme="secondary"
           startIcon={<MdMyLocation />}
           onClick={() => getLocation()}
         >
@@ -254,41 +282,12 @@ export default function Home() {
           variant="outlined"
           onChange={event => setState(event, 'uf')}
         />
-        {!isFacebook && (
-          <>
-            <Input
-              required
-              label="E-mail"
-              error={error.email}
-              value={formState.email}
-              variant="outlined"
-              onChange={event => setState(event, 'email')}
-              helperText={error.email && 'Digite um e-mail valido!'}
-              onBlur={() => validateEmail('blur')}
-              onFocus={() => validateEmail()}
-            />
-
-            <Input
-              variant="outlined"
-              label="Password"
-              value={formState.password}
-              error={error.password}
-              helperText="Digite uma senha com mais de 6 caracteres"
-              onChange={event => setState(event, 'password')}
-              onBlur={() => validatePassword('blur')}
-            />
-          </>
-        )}
         {errorMessage !== '' && <Error>{errorMessage}</Error>}
 
-        <Button
-          variant="contained"
-          theme="primary"
-          endIcon={<MdArrowForward />}
-          onClick={() => createUser()}
-        >
-          Próximo
+        <Button variant="contained" theme="third" onClick={() => addMoreInfo()}>
+          Continuar
         </Button>
+        <ProgressTracking amount={7} position={3}/>
       </Content>
     </Container>
   );
