@@ -1,39 +1,46 @@
 import React, { useState } from 'react'
-import { Radio,RadioGroup,FormControlLabel,Paper,List,Checkbox,Hidden } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Radio,RadioGroup,FormControlLabel,List,Checkbox,Hidden,FormControl } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useHistory } from 'react-router-dom';
 import { Container, Content, Question,Text } from '../styles';
+// import { format, formatDistance, formatRelative, subDays } from 'date-fns'
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+
+import { DateRangePicker,DateRange } from 'react-date-range';
 import moment from 'moment'
 // Components
+// import CustomHiddenView from '../../../components/customhiddenview';
 import HeaderRouter from '../../../components/HeaderRouter';
 import { render } from '@testing-library/react';
+import Button from '../../../components/Button';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      margin: 'auto',
+    },
+    paper: {
+      width: 200,
+      height: 230,
+      overflow: 'auto',
+    },
+    button: {
+      margin: theme.spacing(0.5, 0),
+    },
+  }));
 
 export default function ReportSymptomPage() {
     const history = useHistory();
-    // const [selectedValue, setSelectedValue] = React.useState(false);
-    
-
-    // const [state, setState] = React.useState({
-    //     checkedA: true,
-    //     checkedB: true,
-    //     checkedF: true,
-    //     checkedG: true,
-    //   });
-
-
-    const onPressCheckbox = (event) => {
-        let {entity} = state;
-        entity.showSymptons = event.target.value
-        // setSelectedValue(event.target.value)
-        setState({entity});
-        if (!entity.showSymptons) {
-            setState({continueNoSymptons: true});
-        } else {
-            setState({continueNoSymptons: false});
-        }
-        // componentWillMount()
-        console.log('[onPressCheckbox]',entity.showSymptons)
-    };
-    const [state,setState] = React.useState({
+    const classes = useStyles();
+    const [selectedValue, setSelectedValue] = useState(false)
+    const [state, setState] = useState({
         id: null,
         checkedA: true,
         checkedB: true,
@@ -195,6 +202,8 @@ export default function ReportSymptomPage() {
         showLoading: false,
     });
 
+    
+
     function componentWillMount() {
         const {symptom} = this.context;
         let symptonsList = this.state.entity.symptonsList;
@@ -230,6 +239,9 @@ export default function ReportSymptomPage() {
             });
         }
     }
+    
+ 
+
     const IntroText = () => (
         <Question>
             Você <span>está com sintomas</span> hoje?
@@ -249,21 +261,229 @@ export default function ReportSymptomPage() {
     const YesORNoItem = ({
         onPressCheckbox
         }) =>(
-        <RadioGroup row aria-label="quiz" name="quiz" value={entity.showSymptons} onChange={onPressCheckbox}>
+        <RadioGroup row aria-label="quiz" name="quiz" value={selectedValue} onChange={onPressCheckbox}>
             <FormControlLabel
-                value = 'true'
+                value = 's'
                 control={<Radio color="primary" />}
                 label="Sim"
                 labelPlacement="left"
             />
             <FormControlLabel
-                value = 'false'
+                value = 'n'
                 control={<Radio color="primary" />}
                 label="Não"
                 labelPlacement="left"
             />
         </RadioGroup>
     );
+    const numbers = {teste:[1, 2, 3, 4, 5]
+    };
+
+    const handleChange = (event) => {
+        setState({ ...state, [event.target.name]: event.target.checked });
+    };
+
+    const CheckboxItemWithExpand = (props) =>(
+        <div>
+        {props.symptonsList.map((symptons,idx) =>{
+            const selectionRange = {
+                startDate: new Date(),
+                endDate: new Date(),
+                key: 'selection',
+              }
+            if (
+                symptons.identifier === 'Não tive sintomas' &&
+                props.showSymptons === true
+            ) {
+                return null;
+            }
+            return (
+            <Grid container >
+                <Grid item  xs={10}>
+                <ListItem 
+                    key={idx} 
+                    role="listitem" 
+                    // button 
+                    onClick={
+                        symptons.identifier === 'Não tive sintomas'
+                        ? onClickNoneOfOptions(symptons)
+                        : onClickCheck(symptons, 'box')
+                    }>
+                    <ListItemIcon>
+                        <Checkbox
+                            color="primary"
+                            checked={symptons.check}
+                            tabIndex={-1}
+                            disableRipple
+                            inputProps={{ 'aria-labelledby': idx }}
+                        />
+                    </ListItemIcon>
+                <ListItemText id={idx} primary={symptons.identifier} />
+              </ListItem>
+              </Grid>
+              <Grid item xs={2}>
+                <IconButton
+                    // className={classes.center} 
+                    size="medium" 
+                    onClick={ 
+                        symptons.identifier === 'Não tive sintomas'
+                        ?onClickNoneOfOptions(symptons)
+                        :onClickCheck(symptons, 'arrow')
+                    }>
+                    {symptons.check2?(<KeyboardArrowUpIcon fontSize="inherit" />):(<KeyboardArrowDownIcon fontSize="inherit" />)}
+                    
+                </IconButton>
+              </Grid>
+              <Grid item xs={12}>
+                {symptons.check2 && ( 
+                    <DateRange
+                    editableDateInputs={true}
+                    onChange={item => setStateDate([item.selection])}
+                    moveRangeOnFirstSelection={false}
+                    ranges={stateDate}
+                    />
+                )}
+               </Grid>
+               </Grid>
+             );
+        })}
+        </div>
+    );
+    
+    const [stateDate, setStateDate] = useState([
+        {
+            startDate: new Date(),
+          endDate: null,
+          key: 'selection'
+        }
+      ]);
+    
+    const onPressCheckbox = event => {
+        let {entity} = state;
+        entity.showSymptons = event.target.value==='s'?true:false
+        setState(prevState =>({...prevState,entity}));
+        setSelectedValue(event.target.value)
+        if (!entity.showSymptons) {
+            setState(prevState =>({...prevState,continueNoSymptons:true}));
+        } else {
+            setState(prevState =>({...prevState,continueNoSymptons:false}));
+        }
+        console.log('onPressCheckbox',JSON.stringify(state))
+
+    };
+
+    const checkBreath = () => {
+        let {entity} = state;
+        let shortBreathPosition = entity.symptonsSelected.findIndex(
+          selected => selected === 'Falta de Ar',
+        );
+        let shortBreathPosition2 = entity.hasSymptonsList.findIndex(
+          selected => selected === 'Falta de Ar',
+        );
+        if (shortBreathPosition > -1 || shortBreathPosition2 > -1) {
+          entity.shortBreath = true;
+        } else {
+          entity.shortBreath = false;
+        }
+        setState(prevState =>({...prevState,entity}));
+      };
+
+    const onClickCheck = (identifier,kind) => ()=> {
+        let {entity} = state;
+        // console.log("sssssssssssssssssssssss",identifier,kind)
+        let noneOfOptionsPosition = entity.symptonsSelected.findIndex(
+          selected => selected.identifier === 'Não tive sintomas',
+        );
+        if (noneOfOptionsPosition > -1) {
+          entity.symptonsSelected = [];
+        }
+        entity.symptonsList.map(item => {
+          if (item.identifier === 'Não tive sintomas') {
+            item.identifier = item.identifier;
+            item.start = '';
+            item.end = '';
+            item.check = false;
+            item.check2 = false;
+          }
+          return item;
+        });
+    
+        let currentSymptonsPosition = entity.symptonsSelected.findIndex(
+          selected => selected.identifier === identifier.identifier,
+        );
+        if (currentSymptonsPosition === -1) {
+          entity.symptonsSelected.push(identifier);
+          if (!identifier.check) {
+            identifier.check = true;
+          }
+        //   identifier.check2 = true;
+          checkBreath();
+          setState(prevState =>({...prevState,entity}));
+          return;
+        }
+    
+        if (kind === 'box') {
+          identifier.check = false;
+          identifier.check2 = false;
+          identifier.start = '';
+          identifier.end = '';
+          entity.hasSymptons = false;
+          entity.hasOximeter = false;
+          entity.hasSaturation = false;
+          entity.symptonsSelected.splice(currentSymptonsPosition, 1);
+        } else {
+          identifier.check = true;
+          identifier.check2 = !identifier.check2;
+          entity.hasSymptons = false;
+          entity.hasOximeter = false;
+          entity.hasSaturation = false;
+        }
+    
+        setState(prevState =>({...prevState,entity}));
+      };
+    
+      const onClickNoneOfOptions = identifier => {
+        let {entity} = state;
+        if (!identifier.check) {
+          entity.symptonsList.map(item => {
+            if (item.identifier !== 'Não tive sintomas') {
+              item.identifier = item.identifier;
+              item.start = '';
+              item.end = '';
+              item.check = false;
+              item.check2 = false;
+            } else {
+              item.identifier = item.identifier;
+              item.start = '';
+              item.end = '';
+              item.check = true;
+              item.check2 = false;
+            }
+            return item;
+          });
+          entity.symptonsSelected = [];
+          entity.symptonsSelected.push(identifier);
+          entity.hasSymptons = false;
+          entity.hasOximeter = false;
+          entity.hasSaturation = false;
+          checkBreath();
+          setState(prevState =>({...prevState,entity}));
+        } else {
+          entity.symptonsSelected = [];
+          entity.symptonsList.map(item => {
+            if (item.identifier === 'Não tive sintomas') {
+              item.identifier = item.identifier;
+              item.start = '';
+              item.end = '';
+              item.check = false;
+              item.check2 = false;
+            }
+            return item;
+          });
+          setState(prevState =>({...prevState,entity}));
+        }
+        return;
+    };
 
     let {entity} = state;
 	return (
@@ -272,30 +492,26 @@ export default function ReportSymptomPage() {
             {/* <div styles={{ height: '500px', overflowY: 'scroll' }} style={styles.wrapperDiv}> */}
 			    <HeaderRouter title="ReportSymptomPage" onClick={() => history.goBack()} />
 				<IntroText/>
+                {/* <p>userInfo: {JSON.stringify(state)}</p> */}
                 <YesORNoItem
                     onPressCheckbox = {onPressCheckbox}
                 />
+                {entity.showSymptons ? (<WhatFelling/>):(entity.showSymptons === false && <HaveSymptoms />)}
                 {entity.showSymptons ? (
-                    <WhatFelling />
+                    <Hidden >
+                        {CheckboxItemWithExpand(entity)}
+                        <Button variant="contained" theme="third">
+	          		        Continuar
+	        	        </Button>
+                        {/* <CheckboxItemWithExpand items={entity.symptonsList}/> */}
+                    </Hidden>
                 ) : (
-                    entity.showSymptons === false && <HaveSymptoms />
+                    <Hidden mdDown>
+                        {/* <NumberList props = {entity}/> */}
+                        <ul></ul>
+                    </Hidden>
                 )}
-                <Hidden>
-                    <List>
-                    <FormControlLabel
-                        control={<Checkbox color="primary" checked={state.checkedA} onChange={onPressCheckbox} name="checkedA" />}
-                        label="Febre"
-                    />
-                    </List>
-                </Hidden>
-                <Hidden mdDown>
-                    <List>
-                    <FormControlLabel
-                        control={<Checkbox color="primary" checked={state.checkedA} onChange={onPressCheckbox} name="checkedA" />}
-                        label="Febre"
-                    />
-                    </List>
-                </Hidden>
+                
 			</Content>
 		</Container>
 	)
