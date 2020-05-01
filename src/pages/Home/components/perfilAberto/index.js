@@ -17,7 +17,7 @@ import moment from 'moment';
 
 export default function PerfilAberto(props) {
   const {cpf, birthday} = props.user
-  const {onPressPerfil} = props
+  const {onPressPerfil, onPressTeleorientation} = props
   const Dispatch = useDispatch();
   const history = useHistory();
   const age = moment().diff(new Date(birthday.seconds * 1000), 'years');
@@ -58,7 +58,7 @@ export default function PerfilAberto(props) {
 
        <div className="singleMenu">
          <img src={computer} alt="imagem"/>
-         <span>TELEORIENTAÇÃO</span>
+         <span onClick={onPressTeleorientation}>TELEORIENTAÇÃO</span>
        </div>
 
        <div className="singleMenu">

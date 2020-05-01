@@ -137,7 +137,7 @@ export default function Header({ title, onClick }) {
             <ItemMenu onClick={handleShare}>
               <IconMenu Component={FiShare2} /> COMPARTILHE
             </ItemMenu>
-            <ItemMenu as={Link} to="/teleorientacao" onClick={() => setMenu(false)}>
+            <ItemMenu as={Link} to="/teleorientation" onClick={() => setMenu(false)}>
               <IconMenu Component={FiMonitor} /> TELEORIENTAÇÃO
             </ItemMenu>
           </Items>

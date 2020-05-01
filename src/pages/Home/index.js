@@ -62,6 +62,11 @@ export default function Perfil() {
     );
   }
 
+  function onPressTeleorientation(e) {
+    e.preventDefault();
+    history.push('/teleorientation', { userData: user });
+  }
+
 
   if (isLoading)
     return <Loading open={true} />
@@ -88,7 +93,7 @@ export default function Perfil() {
           <img src={enabled ? arrowTop : arrowOut} alt="arrow" onClick={handleClick} />
         </BoxPerfil>
 
-        {enabled ? <PerfilFechado user={user} onPressPerfil={onPressPerfil} /> : <PerfilAberto user={user} onPressPerfil={onPressPerfil} />}
+        {enabled ? <PerfilFechado user={user} onPressPerfil={onPressPerfil} /> : <PerfilAberto user={user} onPressTeleorientation={onPressTeleorientation} onPressPerfil={onPressPerfil} />}
 
 
       </Container>

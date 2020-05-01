@@ -20,7 +20,7 @@ import HeaderPerfil from '../../components/HeaderPerfil'
 
 
 export default function RiskProfile(props) {
-    const user =props.location.state.userData
+    const user = props.location.state.userData
     const [riskProfileId, setRiskProfileId] = useState(1)
     const [contagionRiskId, setContagionRiskId] = useState(1)
     const [aggravationRiskId, setAggravationRiskId] = useState(1)
@@ -31,7 +31,7 @@ export default function RiskProfile(props) {
 
     useEffect(() => {
         setRisks()
-    }, [])
+    }, [setRisks])
 
 
     function setRisks() {
@@ -49,30 +49,35 @@ export default function RiskProfile(props) {
         </div>)
     }
 
-    function onPressBackToStart(){
-        
+    function onPressBackToStart() {
         props.history.push('/home')
+    }
+
+    function onPressGoToTeleorientation() {
+        props.history.push('/teleorientation', { userData: user })
     }
 
     return (
         <>
-          <HeaderPerfil name={user.name} back={() => props.history.goBack()}/>
+            <HeaderPerfil name={user.name} back={() => props.history.goBack()} />
             <div>
                 <Title />
                 <Contagion {...contagionRisk} />
                 <Aggravation {...aggravationRisk} />
             </div>
             <footer>
-                <Button theme="secondary" 
-          variant="contained"
-          >
-              AGENDAR TELEORIENTAÇÃO
-          </Button>
-          <Button theme="primary" 
-          variant="contained"
-          onClick={() => onPressBackToStart()}
-          >
-              VOLTAR PARA O INICIO
+                <Button
+                    theme="secondary"
+                    variant="contained"
+                    onClick={() => onPressGoToTeleorientation()}
+                >
+                    AGENDAR TELEORIENTAÇÃO
+                </Button>
+                <Button theme="primary"
+                    variant="contained"
+                    onClick={() => onPressBackToStart()}
+                >
+                    VOLTAR PARA O INICIO
           </Button>
             </footer>
 
